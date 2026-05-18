@@ -1,0 +1,24 @@
+name: Auto Commit
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Ye har roz midnight ko run hoga
+  workflow_dispatch:     # Isse aap button click karke manual trigger kar sakte hain
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Make a change
+        run: |
+          echo "Automated update - $(date)" >> automation.txt
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+          git add .
+          git commit -m "Daily contribution update"
+          git push
