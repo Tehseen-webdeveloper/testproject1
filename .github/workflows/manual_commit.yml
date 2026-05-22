@@ -1,6 +1,7 @@
 name: Manual Contribution
+
 on:
-  workflow_dispatch: # Isse "Run workflow" button show hoga
+  workflow_dispatch:
 
 jobs:
   build:
@@ -8,21 +9,13 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Create or Update Contribution File
+      - uses: actions/checkout@v3
+      
+      - name: Update Contribution Log
         run: |
-          # File mein current timestamp likh kar update karein
-          echo "Contribution record: $(date)" >> activity.log
-          
-          # Git configuration
+          echo "Manual action triggered on $(date)" >> manual_log.txt
           git config user.name "Tehseen-webdeveloper"
           git config user.email "tahseen.test@gmail.com"
-          
-          # Changes stage aur commit karein
-          git add activity.log
-          git commit -m "feat: update project activity log"
-          
-          # Push changes
+          git add manual_log.txt
+          git commit -m "chore: manual contribution"
           git push
