@@ -1,21 +1,14 @@
-name: Manual Contribution
-
-on:
-  workflow_dispatch:
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v3
-      
-      - name: Update Contribution Log
+- name: Update Contribution Log
         run: |
-          echo "Manual action triggered on $(date)" >> manual_log.txt
+          # Yahan aap date change kar sakte hain (Format: YYYY-MM-DD)
+          # Example: '2026-05-20'
+          PAST_DATE="2026-05-20" 
+          
+          echo "Manual contribution for $PAST_DATE" >> manual_log.txt
           git config user.name "Tehseen-webdeveloper"
           git config user.email "tahseen.test@gmail.com"
           git add manual_log.txt
-          git commit -m "chore: manual contribution"
+          
+          # Ye command date ko override karti hai
+          GIT_AUTHOR_DATE="$PAST_DATE 12:00:00" GIT_COMMITTER_DATE="$PAST_DATE 12:00:00" git commit -m "past contribution: $PAST_DATE"
           git push
